@@ -1,0 +1,29 @@
+{
+  "name": "snuggle-seeker",
+  "version": "1.0.0",
+  "description": "snuggles",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.12.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabihardy/SnuggleSeeker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabihardy/SnuggleSeeker/issues"
+  },
+  "homepage": "https://github.com/gabihardy/SnuggleSeeker#readme"
+}
