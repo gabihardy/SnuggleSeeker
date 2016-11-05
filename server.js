@@ -4,8 +4,6 @@ var mysql      = require('mysql');
 var path = require('path');
 
 var app = express();
-//Serve static content for the app from the "public" directory in the application directory.
-
 var DIRECTORY = __dirname + '/app/public/';
 console.log(DIRECTORY);
 
@@ -15,7 +13,6 @@ app.set('views', __dirname + '/app/public/');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
 }));
