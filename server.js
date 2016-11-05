@@ -18,16 +18,7 @@ app.set('view engine', 'ejs');
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
-}))
-// override with POST having ?_method=DELETE
-// app.use(methodOverride('_method'));
-
-// var exphbs = require('express-handlebars');
-// app.engine('handlebars', exphbs({
-//     defaultLayout: 'main'
-// }));
-
-// app.set('view engine', 'handlebars');
+}));
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -47,31 +38,45 @@ connection.connect(function(err) {
 });
 
 app.get('/', function(req,res) {
+  console.log('GET -> HOME');
     connection.query('SELECT * FROM user;', function(err, data) {
       if (err) throw err;
-
       console.log(data);
-
       res.render('home.html', {user: data});
 
     });
 });
 
-app.post('/create', function(req,res){
-    connection.query('INSERT INTO user (user) VALUES (?)', [req.body.user], function(err, result) {
+app.get('/friends', function(req,res) {
+  res.render('friends.html');
+});
+
+
+app.get('/api/friends', function(req,res) {
+    connection.query('SELECT * FROM user', function(err, result) {
+      if (err) throw err;
+      res.send({data: result});
+    });
+});
+
+app.post('/api/friends', function(req,res) {
+  console.log('POST -> CREATE');
+  console.log(req.body);
+    connection.query('INSERT INTO user SET ?', req.body, function(err, result) {
       if (err) throw err;
       res.redirect('/');
     });
 });
 
 app.delete('/delete', function(req,res){
+  console.log('DELETE');
     connection.query('DELETE FROM user WHERE id = ?', [req.body.id], function(err, result) {
       if (err) throw err;
       res.redirect('/');
     });
 });
 
-app.put('/update', function(req,res){
+app.put('/update', function(req,res) {
 
     connection.query('UPDATE plans SET user = ? WHERE id = ?', [req.body.user, req.body.id], function(err, result) {
       if (err) throw err;
@@ -81,12 +86,6 @@ app.put('/update', function(req,res){
 
 app.get('/survey', function(req,res) {
   res.render('survey.html', {});
-    // connection.query('SELECT * FROM snuggleseeker;', function(err, data) {
-    //   if (err) throw err;
-
-    //   res.render('survey.html', {survey: data});
-
-    // });
 });
 
 

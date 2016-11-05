@@ -17,6 +17,7 @@
 
 	<div class="container text-center">
 
+	<form>
 		<h2>Survey Questions</h2>
 		<hr>
 
@@ -153,13 +154,7 @@
 		<!-- Submit Button -->
 		<button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
  Submit</button>
-
-		<hr>
-	    <footer class="footer">
-	      <div class="container">
-		        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
-	      </div>
-	    </footer>
+ </form>
 
 	</div>
 
@@ -187,46 +182,26 @@
 
   <script type="text/javascript">
 
-  	// Chosen CSS
-    var config = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
-
     // Capture the form inputs 
     $("#submit").on("click", function(){
 
-    	// Form validation
-    	function validateForm() {
-		  var isValid = true;
-		  $('.form-control').each(function() {
-		    if ( $(this).val() === '' )
-		        isValid = false;
-		  });
-
-		  $('.chosen-select').each(function() {
-
-		  	if( $(this).val() === "")
-		  		isValid = false
-		  })
-		  return isValid;
-		}
-
-		// If all required fields are filled
-		if (validateForm() == true)
-		{
 			// Create an object for the user's data
 	    	var userData = {
 	    		name: $("#name").val(),
-	    		photo: $("#photo").val(),
-	    		scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val(), ]
-	    	}
+	    		email: $("#email").val(),
+	    		photoURL: $("#photo").val(),
+	    		q1: parseInt($("#q1").val()),
+	    		q2: parseInt($("#q2").val()),
+	    		q3: parseInt($("#q3").val()),
+	    		q4: parseInt($("#q4").val()),	
+	    		q5: parseInt($("#q5").val()),
+	    		q6: parseInt($("#q6").val()),
+	    		q7: parseInt($("#q7").val()),
+	    		q8: parseInt($("#q8").val()),
+	    		q9: parseInt($("#q9").val()),
+	    		q10: parseInt($("#q10").val())
+	    	};
+	    	console.log(userData);
 
 
 	    	// Grab the URL of the website
@@ -234,6 +209,8 @@
 
 	    	// AJAX post the data to the friends API. 
 	    	$.post(currentURL + "/api/friends", userData, function(data){
+
+	    		console.log(data);
 
 	    		// Grab the result from the AJAX post so that the best match's name and photo are displayed.
 	    		$("#matchName").text(data.name);
@@ -243,13 +220,7 @@
 		    	$("#resultsModal").modal('toggle');
 
 	    	});
-		}
-		else
-		{
-			alert("Please fill out all fields before submitting!");
-		}
-    	
-    	return false;
+	
     });
 
 
